@@ -15,7 +15,7 @@ class Movimento extends Model
         return $this->belongsTo('App/Categoria');
     }
 
-    public funtion contas(){
+    public function contas(){
         return $this->belongsTo('App/Conta');
     }
 }
