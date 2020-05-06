@@ -12,16 +12,9 @@ class HomeController extends Controller
         $contas = DB::table('contas')->where('deleted_at', NULL)->count();
         $movimentos = Db::table('movimentos')->count();
 
-
-
-
         return view('home.index')
         ->withUsers($users)
         ->withContas($contas)
         ->withMovimentos($movimentos);
-
     }
-
-
-
 }

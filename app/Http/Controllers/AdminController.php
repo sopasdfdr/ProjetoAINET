@@ -3,19 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\User;
 
 class AdminController extends Controller
 {
     public function index(){
-        $users = DB::table('users')->select('name' , 'email', 'foto', 'adm', 'bloqueado')->paginate(20);
+        $users = User::select('name' , 'email', 'foto', 'adm', 'bloqueado')->paginate(10);
 
-
-
-
-        return view('admin.index')
-        ->withUsers($users);
-
-
+        return view('admin.index')->withUsers($users);
     }
 }
