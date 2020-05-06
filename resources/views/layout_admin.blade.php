@@ -50,6 +50,12 @@
 
       <!-- Nav Item -->
         <li class="nav-item" >
+            <a class="nav-link" href="/admin">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Utilizadores</span></a>
+        </li>
+
+        <li class="nav-item" >
             <a class="nav-link" href="#">
             <i class="fas fa-fw fa-table"></i>
               <span>Contas</span></a>

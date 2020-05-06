@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
-Route::get('/admin', 'DashboardController@index');
+//oute::get('/admin', 'DashboardController@index');
+
+Route::get('/admin', 'AdminController@index');
+
