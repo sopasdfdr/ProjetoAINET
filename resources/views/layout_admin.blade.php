@@ -55,20 +55,11 @@
             <span>Utilizadores</span></a>
         </li>
 
-        <li class="nav-item" >
-            <a class="nav-link" href="#">
+        <li class="nav-item">
+            <a class="nav-link" href="/contas">
             <i class="fas fa-fw fa-table"></i>
               <span>Contas</span></a>
-          </li>
-
-        <!-- Nav Item -->
-        <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="fas fa-fw fa-table"></i>
-              <span>Movimentos</span></a>
-          </li>
-
-
+        </li>
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">

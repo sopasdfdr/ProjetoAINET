@@ -9,7 +9,8 @@ use App\Conta;
 
 class HomeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $users = User::count();
         $contas = Conta::where('deleted_at', NULL)->count();
         $movimentos = Movimento::count();

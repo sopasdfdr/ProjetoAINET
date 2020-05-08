@@ -19,3 +19,7 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/admin', 'AdminController@index');
 
+Route::get('/contas', 'UserController@contas');
+Route::get('/dados','UserController@dados');
+
+Auth::routes();
