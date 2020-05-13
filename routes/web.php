@@ -17,9 +17,9 @@ Route::get('/', 'HomeController@index');
 
 //oute::get('/admin', 'DashboardController@index');
 
-Route::get('/admin', 'AdminController@index');
+Route::get('/admin', 'AdminController@index')->name('admin');
 
 Route::get('/contas', 'UserController@contas');
-Route::get('/dados','UserController@dados');
+Route::get('/conta/{conta}/dados','UserController@dados')->name('conta.dados');
 
 Auth::routes();

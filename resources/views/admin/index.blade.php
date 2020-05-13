@@ -1,5 +1,5 @@
 @extends('layout_admin');
-@section('title', 'Utilizadores');
+@section('title', 'Gestão Utilizadores');
 
 @section('content')
 
@@ -30,12 +30,6 @@
             <input type="text" class="form-control" id="mailSearch" name="email" placeholder="Email a filtrar" value={{$email}}>
             </div>
         </div>
-
-       <!-- <select class="form-control col-1" id="searchAdmin" name="adm">
-            <option value=NULL $adm ?? '' == NULL ? 'selected' : '' >Todos</option>
-            <option value=0 $adm ?? '' == 0 ? 'selected' : '' >Normal</option>
-            <option value=1 $adm ?? '' == 1 ? 'selected' : '' >Admin</option>
-        </select>-->
 
         <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="searchAdmin" name="adm" class="custom-control-input" value=3 {{$adm == 3 ? 'checked' : ''}}>

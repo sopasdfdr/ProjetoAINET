@@ -35,4 +35,9 @@ class AdminController extends Controller
         $users = $query->paginate(10);
         return view('admin.index')->withUsers($users)->withNome($nome)->withEmail($email)->withAdm($adm)->withBlq($blq);
     }
+
+  /*  public function edit(Request $request){
+
+        return redirect()->route('admin');
+    }*/
 }

@@ -15,9 +15,13 @@ class UserController extends Controller
         return view('user.contas')->withContas($contas);
     }
 
-    public function dados()
+    public function dados(Conta $conta)
     {
-        $movimentos = Movimento::select('data', 'valor', 'saldo_inicial', 'saldo_final', 'categoria_id', 'tipo')->paginate(10);
-        return view('user.dados')->withMovimentos($movimentos);
+        $movimentos = Movimento::select('data', 'valor', 'saldo_inicial', 'saldo_final', 'categoria_id', 'tipo')
+                                ->where([
+                                    ['user_id', $conta->user_id],
+                                    ['nome', $conta->nome],
+                                ])->paginate(10);
+        return view('user.dados')->withMovimentos($movimentos)->withConta($conta);
     }
 }
