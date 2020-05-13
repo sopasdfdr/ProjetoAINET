@@ -1,5 +1,5 @@
-@extends('layout_admin');
-@section('title', 'Dados Conta');
+@extends('layout_admin')
+@section('title', 'Dados Conta')
 
 @section('content')
 

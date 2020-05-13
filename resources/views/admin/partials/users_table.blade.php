@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-striped mt-3">
     <thead class="thead-dark">
         <tr>
             <th scope="col">Foto</th>
@@ -12,8 +12,8 @@
     </thead>
     <tbody>
         @foreach ($users as $user)
-            <tr>
-                <td>{{$user->foto}}</td>
+            <tr class="{{$user->adm ? 'table-info' : '' }}">
+            <td><img src="{{ asset('storage/fotos/' . $user->foto) }}" alt="Foto User" width="50px" height="50px"></td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->adm ? 'Sim' : ''}}</td>

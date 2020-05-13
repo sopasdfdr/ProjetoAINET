@@ -32,7 +32,7 @@ class AdminController extends Controller
             $query->where('bloqueado', $blq);
         }
 
-        $users = $query->paginate(10);
+        $users = $query->paginate(7);
         return view('admin.index')->withUsers($users)->withNome($nome)->withEmail($email)->withAdm($adm)->withBlq($blq);
     }
 

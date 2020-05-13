@@ -1,5 +1,5 @@
-@extends('layout_admin');
-@section('title', 'Dashboard');
+@extends('layout_admin')
+@section('title', 'Dashboard')
 
 @section('content')
 

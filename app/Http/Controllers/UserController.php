@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function contas()
     {
-        $contas = Conta::select('user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(10);
+        $contas = Conta::where("user_id",auth()->user()->id)->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(10);
         return view('user.contas')->withContas($contas);
     }
 
@@ -19,8 +19,7 @@ class UserController extends Controller
     {
         $movimentos = Movimento::select('data', 'valor', 'saldo_inicial', 'saldo_final', 'categoria_id', 'tipo')
                                 ->where([
-                                    ['user_id', $conta->user_id],
-                                    ['nome', $conta->nome],
+                                    ['conta_id', $conta->id],
                                 ])->paginate(10);
         return view('user.dados')->withMovimentos($movimentos)->withConta($conta);
     }

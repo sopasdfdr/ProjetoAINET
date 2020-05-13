@@ -1,5 +1,5 @@
-@extends('layout_admin');
-@section('title', 'Home Page - Finanças Pessoais');
+@extends('layout_admin')
+@section('title', 'Home Page - Finanças Pessoais')
 
 @section('content')
 

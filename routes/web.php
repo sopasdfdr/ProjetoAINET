@@ -15,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 
-//oute::get('/admin', 'DashboardController@index');
+//Route::get('/admin', 'DashboardController@index');
 
-Route::get('/admin', 'AdminController@index')->name('admin');
+Auth::routes(['verify' =>true]);
 
-Route::get('/contas', 'UserController@contas');
-Route::get('/conta/{conta}/dados','UserController@dados')->name('conta.dados');
-
-Auth::routes();
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/admin', 'AdminController@index')->name('admin');
+    Route::get('/contas', 'UserController@contas');
+    Route::get('/conta/{conta}/dados','UserController@dados')->name('conta.dados');
+});

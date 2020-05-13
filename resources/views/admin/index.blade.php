@@ -1,5 +1,5 @@
-@extends('layout_admin');
-@section('title', 'Gestão Utilizadores');
+@extends('layout_admin')
+@section('title', 'Gestão Utilizadores')
 
 @section('content')
 
