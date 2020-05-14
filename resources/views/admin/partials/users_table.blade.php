@@ -13,7 +13,7 @@
     <tbody>
         @foreach ($users as $user)
             <tr class="{{$user->adm ? 'table-info' : '' }}">
-            <td><img src="{{ asset('storage/fotos/' . $user->foto) }}" alt="Foto User" width="50px" height="50px"></td>
+            <td><img src="{{$user->foto ? asset('storage/fotos/' . $user->foto) : asset('img/default_img.png') }}" alt="Foto User" width="50px" height="50px"></td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
                 <td>{{$user->adm ? 'Sim' : ''}}</td>

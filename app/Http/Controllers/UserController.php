@@ -12,6 +12,7 @@ class UserController extends Controller
     public function contas()
     {
         $contas = Conta::where("user_id",auth()->user()->id)->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(10);
+        auth()->user()->logout();
         return view('user.contas')->withContas($contas);
     }
 
