@@ -24,7 +24,11 @@ class MovimentoPost extends FormRequest
     public function rules()
     {
         return [
-            //
+            'data'       => 'required|date',
+            'valor'      => 'required|numeric',
+            'tipo'       => 'required',
+            'descricao'  => 'nullable|max:250',
+            'imagem_doc' => 'nullable',
         ];
     }
 }

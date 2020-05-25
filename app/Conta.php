@@ -10,17 +10,17 @@ class Conta extends Model
     use SoftDeletes;
     public $timestamps = false;
 
-    protected $fillable=['user_id', 'nome', 'descricao'];
+    protected $fillable=['user_id', 'nome', 'descricao', 'saldo_atual'];
 
-    public function users(){
-        return $this->belongsTo('App/users');
+    public function user(){
+        return $this->belongsTo('App\User');
     }
 
     public function movimentos(){
-        return $this->hasMany('App/Movimento', 'conta_id', 'id');
+        return $this->hasMany('App\Movimento', 'conta_id', 'id');
     }
 
     public function autorizacoes_contas(){
-        return $this->belongsToMany('App/User', 'autorizacoes_contas', 'conta_id', 'id')->withPivot('so_leitura');
+        return $this->belongsToMany('App\User', 'autorizacoes_contas', 'conta_id', 'id')->withPivot('so_leitura');
     }
 }

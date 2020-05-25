@@ -14,7 +14,7 @@ class AdminController extends Controller
         $adm = $request->adm ?? 3;
         $blq = $request->blq ?? 3;
 
-        $query = User::query()->select('name' , 'email', 'foto', 'adm', 'bloqueado');
+        $query = User::query()->select('id','name' , 'email', 'foto', 'adm', 'bloqueado');
 
         if($nome!= NULL)
         {
@@ -36,8 +36,46 @@ class AdminController extends Controller
         return view('admin.index')->withUsers($users)->withNome($nome)->withEmail($email)->withAdm($adm)->withBlq($blq);
     }
 
-  /*  public function edit(Request $request){
+    //bloquear e desbloquear users
+    public function block(User $user)
+    {
+        User::where('id', $user->id)
+            ->update(['bloqueado' => 1]);
 
-        return redirect()->route('admin');
-    }*/
+        return redirect()
+            ->route('admin.index')
+            ->with('success', 'Utilizador bloqueado com sucesso');
+    }
+
+    public function unblock(User $user)
+    {
+        User::where('id', $user->id)
+            ->update(['bloqueado' => 0]);
+
+
+        return redirect()
+            ->route('admin.index')
+            ->with('success', 'Utilizador desbloqueado com sucesso');
+    }
+
+    //promover e desprover de admin
+    public function promote(User $user)
+    {
+        User::where('id', $user->id)
+            ->update(['adm' => 1]);
+
+        return redirect()
+            ->route('admin.index')
+            ->with('success', 'Utilizador promovido a admin');
+    }
+
+    public function demote(User $user)
+    {
+        User::where('id', $user->id)
+            ->update(['adm' => 0]);
+
+        return redirect()
+            ->route('admin.index')
+            ->with('success', 'Utilizador despromovido de admin');
+    }
 }

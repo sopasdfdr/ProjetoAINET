@@ -4,24 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Conta;
-use App\Movimento;
+use App\Http\Requests\UserPost;
 
 class UserController extends Controller
 {
-    public function contas()
+    public function update(UserPost $request, User $user)
     {
-        $contas = Conta::where("user_id",auth()->user()->id)->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(10);
-        auth()->user()->logout();
-        return view('user.contas')->withContas($contas);
-    }
-
-    public function dados(Conta $conta)
-    {
-        $movimentos = Movimento::select('data', 'valor', 'saldo_inicial', 'saldo_final', 'categoria_id', 'tipo')
-                                ->where([
-                                    ['conta_id', $conta->id],
-                                ])->paginate(10);
-        return view('user.dados')->withMovimentos($movimentos)->withConta($conta);
+        $validated_data = $request->validated();
+        $aluno->user->email = $validated_data['email'];
+        $aluno->user->name = $validated_data['name'];
+        $aluno->user->genero = $validated_data['genero'];
+        if ($request->hasFile('foto')) {
+            Storage::delete('public/fotos/' . $aluno->user->url_foto);
+            $path = $request->foto->store('public/fotos');
+            $aluno->user->url_foto = basename($path);
+        }
+        $aluno->user->save();
+        $aluno->curso = $validated_data['curso'];
+        $aluno->numero = $validated_data['numero'];
+        $aluno->save();
+        return redirect()->route('admin.alunos')
+            ->with('alert-msg', 'Aluno "' . $aluno->user->name . '" foi alterado com sucesso!')
+            ->with('alert-type', 'success');
     }
 }

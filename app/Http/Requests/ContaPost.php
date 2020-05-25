@@ -23,8 +23,12 @@ class ContaPost extends FormRequest
      */
     public function rules()
     {
+        //dd($this->id);
         return [
-            //
+            'nome' =>         'required|max:20',
+            'descricao' =>    'max:255',
+            'saldo_atual' =>  'required|numeric',
+            //new rule para o unique do nome de utilizador
         ];
     }
 }

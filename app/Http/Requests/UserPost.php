@@ -24,7 +24,16 @@ class UserPost extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' =>         'required',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')->ignore($this->user_id),
+            ],
+            'password' =>     'required',
+            'NIF' =>          'digits:9',
+            'telefone' =>     'digits:9',
+            'foto' =>         'nullable|image|max:8192',   // Máximum size = 8Mb
         ];
     }
 }
