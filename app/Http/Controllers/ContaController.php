@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Conta;
 use App\Movimento;
 use App\Http\Requests\ContaPost;
+use App\Http\Requests\EmailPost;
 
 class ContaController extends Controller
 {
@@ -71,4 +72,16 @@ class ContaController extends Controller
             }
         }
     }
+
+    public function atribuir(Conta $conta, EmailPost $request){
+        $validated_data = $request->validated();
+        $user = User::where('email', $validated_data["email"])->first();
+        if($user){
+            dd($user);
+            $user->attach($conta->id, ['so_leitura', $validated_data["so_leitura"]]);
+        }
+        return redirect()->route('contas');
+    }
+
+
 }

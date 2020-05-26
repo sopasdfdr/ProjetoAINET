@@ -36,4 +36,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/admin/{user}/unblq', 'AdminController@unblock')->name('admin.unblq');
     Route::put('/admin/{user}/promote', 'AdminController@promote')->name('admin.promote');
     Route::put('/admin/{user}/demote', 'AdminController@demote')->name('admin.demote');
+    Route::post('/conta/{conta}/atribuir', 'ContaController@atribuir')->name('conta.atribuir');
 });
