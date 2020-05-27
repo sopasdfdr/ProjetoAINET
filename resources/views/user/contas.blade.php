@@ -28,8 +28,6 @@
                             <path d="M4 11a1 1 0 112 0v1a1 1 0 11-2 0v-1zm6-4a1 1 0 112 0v5a1 1 0 11-2 0V7zM7 9a1 1 0 012 0v3a1 1 0 11-2 0V9z"/>
                         </svg>
                     </a>
-                    <a type="button" class="btn btn-success float-right mb-3" style="color: white"  data-toggle="modal" data-target='#id_modalAtribuirConta'>Atribuir conta</a>
-                    @include('partials.modal-atribuirConta')
 
                     <form action="{{route('conta.delete', ['conta' => $conta])}}" method="POST" role="form" class="inline">
                         @csrf

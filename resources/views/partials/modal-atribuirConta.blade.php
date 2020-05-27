@@ -13,15 +13,13 @@
                 @method('POST')
                 <div class="form-group">
                     <label for="email">Email address</label>
-                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
                   </div>
                   <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="so_leitura">
+                    <input name="so_leitura" type="checkbox" class="form-check-input" id="so_leitura">
                     <label class="form-check-label" for="so_leitura">So leitura</label>
                   </div>
-                  @error('email')
-                  <div class="text-danger">{{$message}}</div>
-                  @enderror
+
             </form>
         </div>
         <div class="modal-footer">

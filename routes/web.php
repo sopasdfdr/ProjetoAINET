@@ -37,4 +37,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::put('/admin/{user}/promote', 'AdminController@promote')->name('admin.promote');
     Route::put('/admin/{user}/demote', 'AdminController@demote')->name('admin.demote');
     Route::post('/conta/{conta}/atribuir', 'ContaController@atribuir')->name('conta.atribuir');
+    Route::get('/user/dados', 'UserController@edit')->name('user.edit');
+    Route::put('/user/update', 'UserController@update')->name('user.update');
 });

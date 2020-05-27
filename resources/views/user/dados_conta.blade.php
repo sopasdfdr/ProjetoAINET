@@ -52,7 +52,12 @@
 </form>
 
 
+<a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalAtribuirConta'>Atribuir conta</a>
+@include('partials.modal-atribuirConta')
 <a type="button" class="btn btn-success float-right mb-2" href="{{route('movement.create',$conta)}}">Registar Movimento</a>
+@error('email')
+    <div class="text-danger">{{$message}}</div>
+@enderror
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>

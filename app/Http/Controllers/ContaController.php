@@ -73,7 +73,7 @@ class ContaController extends Controller
         }
     }
 
-    public function atribuir(Conta $conta, EmailPost $request){
+    public function atribuir(EmailPost $request, Conta $conta){
         $validated_data = $request->validated();
         $user = User::where('email', $validated_data["email"])->first();
         if($user){
