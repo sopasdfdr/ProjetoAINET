@@ -26,7 +26,7 @@ class ContaPost extends FormRequest
     {
         //dd($this->id);
         return [
-            'nome' =>         ['required','string','max:20', Rule::unique('contas', 'nome')->where($this->id)],
+            'nome' =>         'required|string|max:20|unique:contas,nome,'.$this->id.',id,user_id,'.auth()->user()->id ,
             'descricao' =>    'max:255',
             'saldo_atual' =>  'required|numeric',
             //new rule para o unique do nome de utilizador

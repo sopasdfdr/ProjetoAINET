@@ -11,12 +11,14 @@
         <div class="col-4">
             <label for="mailSearch">Email:</label>
         </div>
+        @can('view_update_adm', 'App\User')
         <div class="col-2">
             <label for="searchAdmin">Tipo:</label>
         </div>
         <div class="col-2">
             <label for="searchBlq">Bloqueado:</label>
         </div>
+        @endcan
     </div>
     <div class="row align-items-center">
         <div class="col-3">
@@ -30,7 +32,7 @@
             <input type="text" class="form-control" id="mailSearch" name="email" placeholder="Email a filtrar" value={{$email}}>
             </div>
         </div>
-
+        @can('view_update_adm', 'App\User')
         <div class="custom-control custom-radio custom-control-inline">
             <input type="radio" id="searchAdmin" name="adm" class="custom-control-input" value=3 {{$adm == 3 ? 'checked' : ''}}>
             <label class="custom-control-label" for="searchAdmin">Todos</label>
@@ -56,7 +58,7 @@
             <input type="radio" id="searchBlq2" name="blq" class="custom-control-input" value=0 {{$blq == 0 ? 'checked' : ''}}>
             <label class="custom-control-label" for="searchBlq2">Não</label>
         </div>
-
+        @endcan
         <div class="col-auto">
             <button type="submit" class="btn btn-primary" id="btn-filter">Filtrar</button>
         </div>

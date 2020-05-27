@@ -4,9 +4,11 @@
             <th scope="col">Foto</th>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
+            @can('view_update_adm', 'App\User')
             <th scope="col">Admin</th>
             <th scope="col">Bloqueado</th>
             <th scope="col">Ações</th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -15,6 +17,7 @@
             <td><img src="{{$user->foto ? asset('storage/fotos/' . $user->foto) : asset('img/default_img.png') }}" alt="Foto User" width="50px" height="50px"></td>
                 <td>{{$user->name}}</td>
                 <td>{{$user->email}}</td>
+                @can('view_update_adm', 'App\User')
                 <td>{{$user->adm ? 'Sim' : ''}}</td>
                 <td>{{$user->bloqueado ? 'Sim' : ''}}</td>
                 <td>
@@ -66,6 +69,7 @@
                         </form>
                     @endif
                 </td>
+                @endcan
             </tr>
 
         @endforeach

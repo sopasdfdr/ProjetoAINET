@@ -14,8 +14,8 @@ class ContaController extends Controller
     public function index()
     {
         //$contas = Conta::where("user_id",auth()->user()->id)->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(7);
-        $contas = auth()->user()->contas()->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(7);
-        return view('user.contas')->withContas($contas);
+        $contas = auth()->user()->contas()->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(4);
+        return view('user.contas')->withContas($contas)->withContasAuth(auth()->user()->autorizacoes_contas()->paginate(4,['*'],'pag_Auth'));
     }
 
     public function create_conta()

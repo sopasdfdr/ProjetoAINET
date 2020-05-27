@@ -19,8 +19,8 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes(['verify' =>true]);
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/admin', 'AdminController@index')->name('admin.index');
+Route::middleware(['auth', 'verified', 'bloqueado'])->group(function () {
+    Route::get('/admin', 'AdminController@index')->name('admin.index')->middleware('can:viewAny, App\User');
     Route::get('/contas', 'ContaController@index')->name('contas');
     Route::get('/conta/{conta}','MovementController@index')->name('conta.dados');
     Route::put('/conta/{conta}', 'ContaController@update')->name('conta.update');

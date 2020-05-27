@@ -24,12 +24,16 @@ class AdminController extends Controller
         {
             $query->where('email', 'LIKE', '%' .$email. '%');
         }
-        if($adm != 3){
-            $query->where('adm', $adm);
-        }
-        if($blq != 3)
-        {
-            $query->where('bloqueado', $blq);
+        if(auth()->user()->can('view_update_adm')){
+
+
+            if($adm != 3){
+                $query->where('adm', $adm);
+            }
+            if($blq != 3)
+            {
+                $query->where('bloqueado', $blq);
+            }
         }
 
         $users = $query->paginate(7);
