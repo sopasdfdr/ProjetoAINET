@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ContaPost extends FormRequest
 {
@@ -25,7 +26,7 @@ class ContaPost extends FormRequest
     {
         //dd($this->id);
         return [
-            'nome' =>         'required|max:20',
+            'nome' =>         ['required','string','max:20', Rule::unique('contas', 'nome')->where($this->id)],
             'descricao' =>    'max:255',
             'saldo_atual' =>  'required|numeric',
             //new rule para o unique do nome de utilizador

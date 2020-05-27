@@ -15,8 +15,9 @@
                     <label for="email">Email address</label>
                     <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
                   </div>
+                  <input type="hidden" name="so_leitura" value=0>
                   <div class="form-check">
-                    <input name="so_leitura" type="checkbox" class="form-check-input" id="so_leitura">
+                    <input name="so_leitura" type="checkbox" class="form-check-input" id="so_leitura" value="1">
                     <label class="form-check-label" for="so_leitura">So leitura</label>
                   </div>
 

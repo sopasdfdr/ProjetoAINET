@@ -18,6 +18,7 @@
     <div class="text-danger">{{$message}}</div>
     @enderror
 </div>
+
 <div class="form-group col-2">
     <label for="nifUser">NIF:</label>
     <div class="input-group">
@@ -30,7 +31,7 @@
 <div class="form-group col-2">
     <label for="telefoneUser">Telefone:</label>
     <div class="input-group">
-        <input name="telefone" id="telefoneUser" type="number" step="1" min="0" max="999999999" required class="form-control" placeholder="Telefone utilizador" value={{$userTelefone}}>
+        <input name="telefone" id="telefoneUser" type="number" step="1" min="0" max="999999999" class="form-control" placeholder="Telefone utilizador" value={{$userTelefone}}>
     </div>
     @error('telefone')
     <div class="text-danger">{{$message}}</div>
@@ -39,9 +40,9 @@
 <div class="form-group col-2">
     <label for="fotoUser">Foto:</label>
     <div class="input-group">
-        <input name="foto" id="fotoUser" type="text" required class="form-control" placeholder="Telefone utilizador" value={{$userFoto}}>
+        <input name="foto" type="file" class="custom-file-input" accept="image/*" value="{{$userFoto}}">
     </div>
     @error('foto')
-    <div class="text-danger">{{$message}}</div>
+        <div class="text-danger">{{$message}}</div>
     @enderror
 </div>

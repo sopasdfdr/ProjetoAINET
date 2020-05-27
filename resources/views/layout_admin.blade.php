@@ -197,6 +197,24 @@
 
   <!-- Core plugin JavaScript-->
   <script src="{{asset('vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+  <script>
+      $('#categoriaMovimento').attr('disabled', 'disabled');
+      $('#tipoMovimentoD').change(function(){
+        $('#categoriaMovimento').removeAttr('disabled');
+          if(this.checked){
+              $('.D').show();
+              $('.R').hide();
+          }
+      });
+      $('#tipoMovimentoR').change(function(){
+        $('#categoriaMovimento').removeAttr('disabled');
+          if(this.checked){
+              $('.R').show();
+              $('.D').hide();
+          }
+      });
+      $('#tipoMovimentoD').trigger('click');
+  </script>
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('js/sb-admin-2.min.js')}}"></script>

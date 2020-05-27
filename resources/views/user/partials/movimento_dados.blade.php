@@ -16,10 +16,10 @@
 <div class="form-group col-2 ml-1">
     <label for="tipoMovimento">*Tipo:</label>
     <div class="input-group ml-2">
-        <label><input name="tipo" type="radio" id="tipoMovimento" value='D' {{$tipoMov == 'D' ? 'checked' : ''}} required>Despesa<label>
+        <label><input name="tipo" type="radio" id="tipoMovimentoD" value='D' {{$tipoMov == 'D' ? 'checked' : ''}} required>Despesa<label>
     </div>
     <div class="input-group ml-2">
-        <label><input name="tipo" type="radio" id="tipoMovimento" value='R' {{$tipoMov == 'R' ? 'checked' : ''}}>Receita<label>
+        <label><input name="tipo" type="radio" id="tipoMovimentoR" value='R' {{$tipoMov == 'R' ? 'checked' : ''}}>Receita<label>
     </div>
     @error('tipo')
     <div class="text-danger">{{$message}}</div>
@@ -28,7 +28,14 @@
 <div class="form-group col-2">
     <label for="categoriaMovimento">Categoria:</label>
     <div class="input-group">
-        <input name="categoria" id="categoriaMovimento" type="number" class="form-control" placeholder="Categoria movimento" value={{$categoriaMov}}>
+        <select name="categoria" id="categoriaMovimento" class="form-control">
+            <option value="">----</option>
+            @foreach ($categorias as $categoria)
+                <option class="{{$categoria->tipo}}" value="{{$categoria->id}}"
+                    {{$categoriaMov == $categoria->id ? 'selected' : ''}}>{{$categoria->nome}} </option>
+
+            @endforeach
+        </select>
     </div>
     @error('categoria')
     <div class="text-danger">{{$message}}</div>

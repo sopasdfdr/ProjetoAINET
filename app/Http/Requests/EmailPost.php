@@ -25,7 +25,7 @@ class EmailPost extends FormRequest
     {
         return [
             'email' => 'required|email',
-            'so_leitura' => 'required'
+            'so_leitura' => 'required|in:0,1'
         ];
     }
 }

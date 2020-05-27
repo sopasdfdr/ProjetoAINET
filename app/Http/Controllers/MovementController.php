@@ -33,13 +33,15 @@ class MovementController extends Controller
     public function create(Conta $conta)
     {
         $newMovement = new Movimento;
-        return view('user.movimento_inserir')->withMovimento($newMovement)->withConta($conta);
+        $categorias = Categoria::orderBy('nome')->get();
+        return view('user.movimento_inserir')->withMovimento($newMovement)->withConta($conta)->withCategorias($categorias);
     }
 
     public function edit(Movimento $movimento)
     {
         $conta = Conta::find($movimento->conta_id);
-        return view('user.movimento_edit')->withMovimento($movimento)->withConta($conta);
+        $categorias = Categoria::orderBy('nome')->get();
+        return view('user.movimento_edit')->withMovimento($movimento)->withConta($conta)->withCategorias($categorias);
     }
 
     public function update(Movimento $movimento, MovimentoPost $request)
@@ -121,8 +123,7 @@ class MovementController extends Controller
 
         if ($request->categoria != null)
         {
-            $category = Categoria::find($validated_data['categoria']);
-            $movement['categoria'] = $category['id'];
+            $movement['categoria_id'] = $validated_data['categoria'];
         }
 
         if ($request->has('descricao')){ //has nao da nos outros????
@@ -142,7 +143,7 @@ class MovementController extends Controller
             $conta->saldo_atual += $movement['valor'];
         }
 
-        if ($request->imagem_doc != null){
+        if ($request->hasFile('imagem_doc')){
             $file = $request->file('imagem_doc');
             $extension = $file->getClientOriginalExtension(); //extensao da imagem
             $filename = time() . '.' . $extension;

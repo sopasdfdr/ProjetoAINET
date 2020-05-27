@@ -3,7 +3,7 @@
 
 @section('content')
 
-<form action={{route('movement.store', ['conta' => $conta])}} method="POST">
+<form action={{route('movement.store', ['conta' => $conta])}} method="POST" enctype="multipart/form-data">
     @method('POST')
     @include('user.partials.movimento_dados',['dataMov' => $movimento->data, 'descricaoMov' => $movimento->descricao, 'tipoMov' => $movimento->tipo,
         'categoriaMov' => $movimento->categoriaMov, 'valorMov' => $movimento->valor])

@@ -17,11 +17,16 @@ class UserController extends Controller
     public function update(UserPost $request, User $user)
     {
         $validated_data = $request->validated();
+        $user->name = $validated_data['name'];
+        $user->email = $validated_data['email'];
+        $user->NIF = $validated_data['NIF'];
+        $user->telefone = $validated_data['telefone'];
         if ($request->hasFile('foto')) {
-            Storage::delete('public/fotos/' . $aluno->user->url_foto);
-            $path = $request->foto->store('public/fotos');
-            $aluno->user->url_foto = basename($path);
+            Storage::delete('storage/app/public/fotos/' . $user->foto);
+            $path = $request->foto->store('storage/app/public/fotos');
+            $user->foto = basename($path);
         }
+        $user->save();
         return redirect()->route('user.edit')
             ->with('alert-msg', 'Dados de conta alterados com sucesso!')
             ->with('alert-type', 'success');

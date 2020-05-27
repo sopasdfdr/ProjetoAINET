@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserPost extends FormRequest
 {
@@ -28,11 +29,11 @@ class UserPost extends FormRequest
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users', 'email')->ignore($this->user_id),
+                Rule::unique('users', 'email')->ignore($this->id),
             ],
-            'password' =>     'required',
-            'NIF' =>          'digits:9',
-            'telefone' =>     'digits:9',
+            'password' =>     'sometimes|confirmed',
+            'NIF' =>          'nullable|digits:9',
+            'telefone' =>     'nullable|digits:9',
             'foto' =>         'nullable|image|max:8192',   // Máximum size = 8Mb
         ];
     }

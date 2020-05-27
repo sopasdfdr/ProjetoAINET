@@ -29,6 +29,7 @@ class MovimentoPost extends FormRequest
             'tipo'       => 'required',
             'descricao'  => 'nullable|max:250',
             'imagem_doc' => 'nullable',
+            'categoria'  => 'nullable|exists:categorias,id'
         ];
     }
 }

@@ -61,6 +61,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="nif" class="col-md-4 col-form-label text-md-right">{{ __('Nif (optional)') }}</label>
+                            <div class="col-md-6">
+                                <input name="NIF" id="nifUser" step="1" min="0" max="999999999" type="number" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="telefone" class="col-md-4 col-form-label text-md-right">{{ __('Telefone (optional)') }}</label>
+                            <div class="col-md-6">
+                                <input name="telefone" id="telefoneUser" type="number" step="1" min="0" max="999999999" class="form-control">
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

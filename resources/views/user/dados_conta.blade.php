@@ -77,7 +77,7 @@
                 <td style="text-align:left">{{$movimento->valor}}</td>
                 <td style="text-align:right">{{$movimento->saldo_inicial}} €</td>
                 <td style="text-align:right">{{$movimento->saldo_final}} €</td>
-                <td style="text-align:right">{{$movimento->categoria_id}}</td>
+                <td style="text-align:right">{{$movimento->categoria_id ? $movimento->categoria->nome : ''}}</td>
                 <td style="text-align:right">{{$movimento->tipo}}</td>
                 <td style="text-align:right">
                 <a class="btn btn-info" href="{{route('movement.edit', ['movimento' => $movimento])}}">

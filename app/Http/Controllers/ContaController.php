@@ -7,6 +7,7 @@ use App\Conta;
 use App\Movimento;
 use App\Http\Requests\ContaPost;
 use App\Http\Requests\EmailPost;
+use App\User;
 
 class ContaController extends Controller
 {
@@ -77,8 +78,7 @@ class ContaController extends Controller
         $validated_data = $request->validated();
         $user = User::where('email', $validated_data["email"])->first();
         if($user){
-            dd($user);
-            $user->attach($conta->id, ['so_leitura', $validated_data["so_leitura"]]);
+            $user->autorizacoes_contas()->attach($conta->id, ['so_leitura' => $validated_data["so_leitura"]]);
         }
         return redirect()->route('contas');
     }

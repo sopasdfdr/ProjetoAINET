@@ -5,6 +5,7 @@
 
 <form method="POST" action="{{route('user.update')}}">
     @method('PUT')
+    <input type="hidden" name="id" value={{$user->id}}>
     @include('user.partials.user_dados_partial',['userNome' => $user->name, 'userEmail' => $user->email,
     'userNif' => $user->NIF, 'userTelefone' => $user->telefone, 'userFoto' => $user->foto])
     <button type="submit" class="btn btn-primary ml-3 mr-2 mb-2" id="btn-accept">Guardar</button>
