@@ -26,8 +26,11 @@ class MovementController extends Controller
         if($tipo != null)
             $query->where('tipo',$tipo);
 
+        $autorizadas = $conta->autorizacoes_contas();
+        dd($autorizadas);
+
         $movimentos = $query->orderBy('data', 'desc')->orderBy('id', 'desc')->paginate(7);
-        return view('user.dados_conta')->withMovimentos($movimentos)->withConta($conta)->withData($data)->withCategoria($categoria)->withTipo($tipo);
+        return view('user.dados_conta')->withMovimentos($movimentos)->withConta($conta)->withData($data)->withCategoria($categoria)->withTipo($tipo)->withAutorizadas($autorizadas);
     }
 
     public function create(Conta $conta)

@@ -29,7 +29,6 @@ class UserPolicy
 
     }
 
-
     /**
      * Determine whether the user can view the model.
      *

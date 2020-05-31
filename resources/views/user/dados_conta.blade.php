@@ -51,7 +51,8 @@
     </div>
 </form>
 
-
+<a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalRemoverPessoa'>Remover conta</a>
+@include('partials.modal-removerPessoa')
 <a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalAtribuirConta'>Atribuir conta</a>
 @include('partials.modal-atribuirConta')
 <a type="button" class="btn btn-success float-right mb-2" href="{{route('movement.create',$conta)}}">Registar Movimento</a>

@@ -24,7 +24,7 @@ class AdminController extends Controller
         {
             $query->where('email', 'LIKE', '%' .$email. '%');
         }
-        if(auth()->user()->can('view_update_adm')){
+
 
 
             if($adm != 3){
@@ -34,7 +34,7 @@ class AdminController extends Controller
             {
                 $query->where('bloqueado', $blq);
             }
-        }
+
 
         $users = $query->paginate(7);
         return view('admin.index')->withUsers($users)->withNome($nome)->withEmail($email)->withAdm($adm)->withBlq($blq);
