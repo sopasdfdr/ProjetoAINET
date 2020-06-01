@@ -33,13 +33,13 @@
         </div>
         <div class="sidebar-brand-text mx-3">DEI</div>
       </a>
-
+      @can('view', 'App\User')
       <!-- Divider -->
       <hr class="sidebar-divider my-0">
 
       <!-- Nav Item - Dashboard -->
       <li class="nav-item">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/home">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -68,6 +68,7 @@
       <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
+      @endcan
 
     </ul>
     <!-- End of Sidebar -->
@@ -202,6 +203,8 @@
       $('#tipoMovimentoD').change(function(){
         $('#categoriaMovimento').removeAttr('disabled');
           if(this.checked){
+              var elemento = document.getElementById("categoriaMovimento");
+              elemento.value = "";
               $('.D').show();
               $('.R').hide();
           }
@@ -209,12 +212,45 @@
       $('#tipoMovimentoR').change(function(){
         $('#categoriaMovimento').removeAttr('disabled');
           if(this.checked){
+              var elemento = document.getElementById("categoriaMovimento");
+              elemento.value = "";
               $('.R').show();
               $('.D').hide();
           }
       });
       $('#tipoMovimentoD').trigger('click');
   </script>
+
+<script>
+    $('#categoriaMovimentoFilter').attr('disabled', 'disabled');
+    $('#searchTipoD').change(function(){
+      $('#categoriaMovimentoFilter').removeAttr('disabled');
+        if(this.checked){
+            var elemento = document.getElementById("categoriaMovimentoFilter");
+            elemento.value = "";
+            $('.D').show();
+            $('.R').hide();
+        }
+    });
+    $('#searchTipoR').change(function(){
+      $('#categoriaMovimentoFilter').removeAttr('disabled');
+        if(this.checked){
+            var elemento = document.getElementById("categoriaMovimentoFilter");
+            elemento.value = "";
+            $('.R').show();
+            $('.D').hide();
+        }
+    });
+    $('#searchTipo').change(function(){
+        $('#categoriaMovimentoFilter').attr('disabled', 'disabled');
+        if(this.checked){
+            var elemento = document.getElementById("categoriaMovimentoFilter");
+            elemento.value = "";
+            $('.D').hide();
+            $('.R').hide();
+        }
+    });
+</script>
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('js/sb-admin-2.min.js')}}"></script>

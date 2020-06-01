@@ -19,39 +19,38 @@
             <input name="data" id="dataSearch" type="date" max=<?php echo date('Y-m-d');?> class="form-control" placeholder="Data do Movimento" value={{$data}}>
         </div>
         <label class="mr-3 ml-2">Tipo:</label>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="searchTipo" name="tipo" class="custom-control-input" value='D' {{$tipo == 'D' ? 'checked' : ''}}>
-                <label class="custom-control-label" for="searchTipo">Despesa</label>
-            </div>
-            <div class="custom-control custom-radio custom-control-inline">
-                <input type="radio" id="searchTipo1" name="tipo" class="custom-control-input" value='R' {{$tipo == 'R' ? 'checked' : ''}}>
-                <label class="custom-control-label" for="searchTipo1">Receita</label>
-            </div>
-        <div class="col-auto">
-            <select name="categoria" class="form-control" id="sel1">
-                @if ($tipo=='R')
-                    @for ($i = 13; $i < 44; $i++)
-                        <option value={{$i}}>{{$i}}</option>
-                    @endfor
-                @else
-                @if($tipo=='D')
-                    @for ($i = 1; $i < 13; $i++)
-                        <option value={{$i}}>{{$i}}</option>
-                    @endfor
-                @endif
-                @endif
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="searchTipo" name="tipo" class="custom-control-input" checked value=3>
+            <label class="custom-control-label" for="searchTipo">Todos</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="searchTipoD" name="tipo" class="custom-control-input" value='D' {{$tipo == 'D' ? 'checked' : ''}}>
+            <label class="custom-control-label" for="searchTipoD">Despesa</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="searchTipoR" name="tipo" class="custom-control-input" value='R' {{$tipo == 'R' ? 'checked' : ''}}>
+            <label class="custom-control-label" for="searchTipoR">Receita</label>
+        </div>
+        <label class="mr-3 ml-2">Categoria:</label>
+        <div class="input-group col-2">
+            <select name="cat" id="categoriaMovimentoFilter" class="form-control">
+                <option value="">----</option>
+                @foreach ($categorias as $categoria)
+                    <option class="{{$categoria->tipo}}" value="{{$categoria->id}}"
+                        {{$cat == $categoria->id ? 'selected' : ''}}>{{$categoria->nome}} </option>
+                @endforeach
             </select>
         </div>
         <div class="col-auto">
             <button type="submit" class="btn btn-primary" id="btn-filter">Filtrar</button>
         </div>
         <div class="col-auto">
-            <a class="btn btn-primary" href="#">Clean</a>
+            <a class="btn btn-primary" href="{{route('conta.dados', ['conta' => $conta]) }}">Clean</a>
         </div>
     </div>
 </form>
 
-<a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalRemoverPessoa'>Remover conta</a>
+<a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalRemoverPessoa'>Remover pessoa</a>
 @include('partials.modal-removerPessoa')
 <a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalAtribuirConta'>Atribuir conta</a>
 @include('partials.modal-atribuirConta')

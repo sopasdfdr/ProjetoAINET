@@ -8,24 +8,22 @@
             </button>
         </div>
         <div class="modal-body">
-            <form action={{route('conta.atribuir', ['conta' => $conta->id])}} method="POST" id="atribuirConta">
+            <form action={{route('conta.revogar', ['conta' => $conta])}} method="POST" id="removerConta">
                 @csrf
-                @method('POST')
+                @method('delete')
                 <div class="form-group">
-                    <label for="email">Email address</label>
-                    <input name="email" type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                    <select class="custom-select">
-                        <option selected>Selecione um mail para remover</option>
-                        @foreach ($autorizadas as $autorizada)
-                            <option value="{{$autorizada->id}}">{{$autorizada->email}}</option>
+                    <label for="email">Email da pessoa a remover</label>
+                    <select class="custom-select" name="userRevogar">
+                        <option value="" selected>Selecione um mail para remover</option>
+                        @foreach ($autorizados as $autorizado)
+                            <option value="{{$autorizado->id}}">{{$autorizado->email}}</option>
                         @endforeach
-
                     </select>
                 </div>
             </form>
         </div>
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" form="atribuirConta">Accept</button>
+            <button type="submit" class="btn btn-primary" form="removerConta">Accept</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
         </div>

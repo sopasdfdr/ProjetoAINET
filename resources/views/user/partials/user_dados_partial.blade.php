@@ -40,7 +40,7 @@
 <div class="form-group col-2">
     <label for="fotoUser">Foto:</label>
     <div class="input-group">
-        <input name="foto" type="file" class="custom-file-input" accept="image/*" value="{{$userFoto}}">
+        <input name="foto" type="file" accept="image/*">
     </div>
     @error('foto')
         <div class="text-danger">{{$message}}</div>

@@ -53,3 +53,13 @@
     <div class="text-danger">{{$message}}</div>
     @enderror
 </div>
+
+<div class="form-group col-2">
+    <label for="imagemDoc">Imagem:</label>
+    <div class="input-group">
+        <input name="imagem_doc" id="imagemDoc" type="file">
+    </div>
+    @error('imagem_doc')
+    <div class="text-danger">{{$message}}</div>
+    @enderror
+</div>

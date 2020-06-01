@@ -2,35 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Conta;
-use App\Movimento;
 use App\Categoria;
+use App\Movimento;
+use Illuminate\Http\Request;
 use App\Http\Requests\MovimentoPost;
+use Illuminate\Support\Facades\Storage;
 
 class MovementController extends Controller
 {
-    public function index(Conta $conta)
+    public function index(Request $request, Conta $conta)
     {
+        $categorias = Categoria::orderBy('nome')->get();
+
         $data = $request->data ?? NULL;
-        $categoria = $request->cat ?? NULL;
-        $tipo = $request->tipo ?? NULL;
+        $cat = $request->cat ?? NULL;
+        $tipo = $request->tipo ?? 3;
 
         $query = Movimento::select('id', 'data', 'valor', 'saldo_inicial', 'saldo_final', 'categoria_id', 'tipo')
                             ->where('conta_id', $conta->id);
 
         if($data != null)
             $query->where('data',$data);
-        if($categoria != null)
-            $query->where('categoria_id', $categoria);
-        if($tipo != null)
+        if($cat != null)
+            $query->where('categoria_id', $cat);
+        if($tipo != 3)
             $query->where('tipo',$tipo);
 
-        $autorizadas = $conta->autorizacoes_contas();
-        dd($autorizadas);
 
         $movimentos = $query->orderBy('data', 'desc')->orderBy('id', 'desc')->paginate(7);
-        return view('user.dados_conta')->withMovimentos($movimentos)->withConta($conta)->withData($data)->withCategoria($categoria)->withTipo($tipo)->withAutorizadas($autorizadas);
+        $users_autorizados = $conta->autorizacoes_contas;
+       // dd($users_autorizados);
+        return view('user.dados_conta')->withMovimentos($movimentos)->withConta($conta)->withData($data)->withCat($cat)
+        ->withTipo($tipo)->withAutorizados($users_autorizados)->withCategorias($categorias);
     }
 
     public function create(Conta $conta)
@@ -107,6 +111,12 @@ class MovementController extends Controller
         if ($request->categoria != null)
             $movimento->categoria = $validated_data['categoria'];
 
+        if ($request->hasFile('imagem_doc')){
+            Storage::delete('docs/'.$movimento->imagem_doc);
+            $path = $request->imagem_doc->store('docs');
+            $movimento->imagem_doc = basename($path);
+        }
+
         $conta->save();
         $movimento->save();
         return redirect()
@@ -116,7 +126,6 @@ class MovementController extends Controller
 
     public function store(MovimentoPost $request ,Conta $conta)
     {
-        $movements = $conta->movimentos()->orderBy('data', 'desc')->orderBy('id', 'desc')->first();
         $validated_data = $request->validated();
         $movement = new Movimento;
         $movement['tipo'] = $validated_data['tipo'];
@@ -133,10 +142,7 @@ class MovementController extends Controller
             $movement['descricao'] = $validated_data['descricao'];
         }
 
-       // if ($movements != null){
-       //     $movement['saldo_inicial'] = $movements['saldo_final'];
-       // }else
-            $movement['saldo_inicial']= $conta->saldo_atual;
+        $movement['saldo_inicial']= $conta->saldo_atual;
 
         if ($movement['tipo'] == 'D'){
             $movement['saldo_final'] = $movement['saldo_inicial'] - $movement['valor'];
@@ -147,12 +153,11 @@ class MovementController extends Controller
         }
 
         if ($request->hasFile('imagem_doc')){
-            $file = $request->file('imagem_doc');
-            $extension = $file->getClientOriginalExtension(); //extensao da imagem
-            $filename = time() . '.' . $extension;
-            $file->move('storage/app/docs', $filename);
-            $movement->imagem_doc = $filename;
+            $path = $request->imagem_doc->store('docs');
+            $movimento->imagem_doc = basename($path);
         }
+
+        $conta->data_ultimo_movimento = $validated_data['data'];
 
         $movement->save();
         $conta->save();
@@ -165,7 +170,9 @@ class MovementController extends Controller
     {
         try {
             $conta = Conta::find($movimento->conta_id);
-            $movimento->delete();
+            if($movimento->imagem_doc != null)
+                Storage::delete('docs/'.$movimento->imagem_doc);
+            $movimento->forceDelete();
             return redirect()->route('conta.dados',['conta' => $conta])
                 ->with('alert-msg', 'Movimento apagado com sucesso!')
                 ->with('alert-type', 'success');
@@ -183,5 +190,10 @@ class MovementController extends Controller
                     ->with('alert-type', 'danger');
             }
         }
+    }
+
+    public function getFoto(Movimento $movimento)
+    {
+        return response()->file(storage_path().'/app/docs/'.$movimento->imagem_doc);
     }
 }

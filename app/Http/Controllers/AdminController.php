@@ -24,18 +24,13 @@ class AdminController extends Controller
         {
             $query->where('email', 'LIKE', '%' .$email. '%');
         }
-
-
-
-            if($adm != 3){
-                $query->where('adm', $adm);
-            }
-            if($blq != 3)
-            {
-                $query->where('bloqueado', $blq);
-            }
-
-
+        if($adm != 3){
+            $query->where('adm', $adm);
+        }
+        if($blq != 3)
+        {
+            $query->where('bloqueado', $blq);
+        }
         $users = $query->paginate(7);
         return view('admin.index')->withUsers($users)->withNome($nome)->withEmail($email)->withAdm($adm)->withBlq($blq);
     }

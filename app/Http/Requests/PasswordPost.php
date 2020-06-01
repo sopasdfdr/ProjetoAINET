@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
-class MovimentoPost extends FormRequest
+class PasswordPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +25,8 @@ class MovimentoPost extends FormRequest
     public function rules()
     {
         return [
-            'data'       => 'required|date',
-            'valor'      => 'required|numeric',
-            'tipo'       => 'required',
-            'descricao'  => 'nullable|max:250',
-            'imagem_doc' => 'nullable|image',
-            'categoria'  => 'nullable|exists:categorias,id'
+            'oldPassword' => 'required',
+            'password' => 'required|string|min:3|confirmed',
         ];
     }
 }

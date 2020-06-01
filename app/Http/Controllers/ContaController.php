@@ -14,7 +14,7 @@ class ContaController extends Controller
     public function index()
     {
         //$contas = Conta::where("user_id",auth()->user()->id)->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(7);
-        $contas = auth()->user()->contas()->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento')->paginate(4);
+        $contas = auth()->user()->contas()->select('id','user_id','nome','descricao','saldo_atual','data_ultimo_movimento', 'deleted_at')->paginate(4);
         return view('user.contas')->withContas($contas)->withContasAuth(auth()->user()->autorizacoes_contas()->paginate(4,['*'],'pag_Auth'));
     }
 
@@ -43,15 +43,16 @@ class ContaController extends Controller
         $newConta->nome = $validated_data['nome'];
         $newConta->descricao = $validated_data['descricao'];
         $newConta->saldo_atual = $validated_data['saldo_atual'];
+        $newConta->saldo_abertura = $validated_data['saldo_atual'];
         $newConta->save();
         return redirect()->route('contas')
             ->with('alert-msg', 'Conta "' . $newConta->nome . '" foi criada com sucesso!')
             ->with('alert-type', 'success');
     }
 
-    public function destroy(Conta $conta)
+    public function close(Conta $conta)
     {
-        $oldName = $conta->nome;
+      $oldName = $conta->nome;
         try {
             $query = $conta->movimentos()->delete();
             $conta->delete();
@@ -74,14 +75,51 @@ class ContaController extends Controller
         }
     }
 
-    public function atribuir(EmailPost $request, Conta $conta){
+    public function atribuir(EmailPost $request, Conta $conta)
+    {
         $validated_data = $request->validated();
         $user = User::where('email', $validated_data["email"])->first();
         if($user){
             $user->autorizacoes_contas()->attach($conta->id, ['so_leitura' => $validated_data["so_leitura"]]);
         }
-        return redirect()->route('contas');
+        return redirect()->route('contas')
+            ->with('alert-msg','Acesso atribuido com sucesso!')
+            ->with('alert-type', 'success');
     }
 
+    public function revogar(Request $request, Conta $conta)
+    {
+        $user = User::findOrfail($request->userRevogar);
+        $user->autorizacoes_contas()->detach(['conta_id' => $conta->id, 'user_id' => $user->id]);
+        return redirect()->route('contas')
+            ->with('alert-msg','Acesso revogado com sucesso!')
+            ->with('alert-type', 'success');
+    }
+
+    public function listDeleted()
+    {
+        $deleted = auth()->user()->contas()->select('id','nome','descricao','saldo_atual','data_ultimo_movimento','deleted_at')->onlyTrashed()->paginate(4);
+        return view('user.contas_removidas')->withContas($deleted);
+    }
+
+    public function restore($id)
+    {
+        $conta = Conta::onlyTrashed()->findOrfail($id);
+        $conta->restore();
+        Movimento::onlyTrashed()->where('conta_id',$conta->id)->restore();
+        return redirect()->route('contas')
+            ->with('alert-msg','Conta restaurada com sucesso')
+            ->with('alert-type', 'success');
+    }
+
+    public function permanentDelete($id)
+    {
+        $conta = Conta::onlyTrashed()->find($id);
+        $conta->movimentos()->forceDelete();
+        $conta->forceDelete();
+        return redirect()->route('contas')
+            ->with('alert-msg','Conta eliminada permanente com sucesso')
+            ->with('alert-type', 'success');
+    }
 
 }
