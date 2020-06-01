@@ -32,7 +32,7 @@ class MovementController extends Controller
 
         $movimentos = $query->orderBy('data', 'desc')->orderBy('id', 'desc')->paginate(7);
         $users_autorizados = $conta->autorizacoes_contas;
-       // dd($users_autorizados);
+       //dd('');
         return view('user.dados_conta')->withMovimentos($movimentos)->withConta($conta)->withData($data)->withCat($cat)
         ->withTipo($tipo)->withAutorizados($users_autorizados)->withCategorias($categorias);
     }
@@ -170,6 +170,23 @@ class MovementController extends Controller
     {
         try {
             $conta = Conta::find($movimento->conta_id);
+            $movements = $conta->movimentos()->where('id','>',$movimento->id)->orderBy('id', 'asc')->get();
+            $saldo_anterior = $movimento->saldo_inicial;
+
+            foreach ($movements as $movementToUpdate) {
+                $movementToUpdate->saldo_inicial = $saldo_anterior;
+                if ( $movementToUpdate->tipo == 'D')
+                {
+                    $movementToUpdate->saldo_final = $movementToUpdate->saldo_inicial - $movementToUpdate->valor;
+                }
+                else
+                {
+                    $movementToUpdate->saldo_final = $movementToUpdate->saldo_inicial + $movementToUpdate->valor;
+                }
+                $saldo_anterior = $movementToUpdate->saldo_final;
+                $movementToUpdate->save();
+            }
+
             if($movimento->imagem_doc != null)
                 Storage::delete('docs/'.$movimento->imagem_doc);
             $movimento->forceDelete();

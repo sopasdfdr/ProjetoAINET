@@ -2,6 +2,7 @@
 @section('title', 'Dados Conta')
 
 @section('content')
+@can('update',$conta)
 <form action={{route('conta.update', ['conta' => $conta])}} method="POST">
     @method('PUT')
     <input type="hidden" name="id" value={{$conta->id}}>
@@ -9,7 +10,7 @@
     <a class="btn btn-secondary" href="{{route('conta.dados', ['conta' => $conta]) }}">Cancelar</a>
     <button type="submit" class="btn btn-primary mr-2" id="btn-accept">Guardar</button>
 </form>
-
+@endcan
 
 <!-- filtragem -->
 <form class="user-search mt-4" action="#" method="GET">
@@ -49,15 +50,16 @@
         </div>
     </div>
 </form>
-
-<a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalRemoverPessoa'>Remover pessoa</a>
-@include('partials.modal-removerPessoa')
-<a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalAtribuirConta'>Atribuir conta</a>
-@include('partials.modal-atribuirConta')
-<a type="button" class="btn btn-success float-right mb-2" href="{{route('movement.create',$conta)}}">Registar Movimento</a>
-@error('email')
-    <div class="text-danger">{{$message}}</div>
-@enderror
+@can('update',$conta)
+    <a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalRemoverPessoa'>Remover pessoa</a>
+    @include('partials.modal-removerPessoa')
+    <a type="button" class="btn btn-primary float-right mb-3 ml-2" style="color: white"  data-toggle="modal" data-target='#id_modalAtribuirConta'>Atribuir conta</a>
+    @include('partials.modal-atribuirConta')
+    <a type="button" class="btn btn-success float-right mb-2" href="{{route('movement.create',$conta)}}">Registar Movimento</a>
+    @error('email')
+        <div class="text-danger">{{$message}}</div>
+    @enderror
+@endcan
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
@@ -67,7 +69,9 @@
             <th scope="col" style="text-align:right">Saldo Final</th>
             <th scope="col" style="text-align:right">Categoria</th>
             <th scope="col" style="text-align:right">Tipo</th>
+            @can('update',$conta)
             <th scope="col" style="text-align:right">Ações</th>
+            @endcan
         </tr>
     </thead>
     <tbody>
@@ -79,6 +83,7 @@
                 <td style="text-align:right">{{$movimento->saldo_final}} €</td>
                 <td style="text-align:right">{{$movimento->categoria_id ? $movimento->categoria->nome : ''}}</td>
                 <td style="text-align:right">{{$movimento->tipo}}</td>
+                @can('update',$conta)
                 <td style="text-align:right">
                 <a class="btn btn-info" href="{{route('movement.edit', ['movimento' => $movimento])}}">
                         <svg class="bi bi-clipboard-data" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -100,6 +105,7 @@
                         @include('partials.modal-messages', ['paramId' => 'modalMovimentoRemove'.$movimento->id, 'title' => 'Remover Movimento', 'text' => 'Tem a certeza que quer eliminar este movimento?'])
                     </form>
                 </td>
+                @endcan
             </tr>
         @endforeach
     </tbody>

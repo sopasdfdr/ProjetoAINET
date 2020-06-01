@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use App\Movimento;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class MovimentoPolicy
 {
     use HandlesAuthorization;
 
@@ -20,25 +21,16 @@ class UserPolicy
         return true;
     }
 
-    public function view_update_adm(User $user)
-    {
-        if($user->adm){
-            return true;
-        }
-        return false;
-
-    }
-
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Movimento  $movimento
      * @return mixed
      */
-    public function view(User $user)
+    public function view(User $user, Movimento $movimento)
     {
-        if($user->id == auth()->user()->id){
+        if($movimento->conta->user_id == $user->id){
             return true;
         }
         return false;
@@ -59,12 +51,12 @@ class UserPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Movimento  $movimento
      * @return mixed
      */
-    public function update(User $user)
+    public function update(User $user, Movimento $movimento)
     {
-        if($user->id == auth()->user()->id){
+        if($movimento->conta->user_id == $user->id){
             return true;
         }
         return false;
@@ -74,20 +66,42 @@ class UserPolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\User  $user
-     * @param  \App\User  $model
+     * @param  \App\Movimento  $movimento
      * @return mixed
      */
-    public function delete(User $user)
+    public function delete(User $user, Movimento $movimento)
     {
-        if($user->id == auth()->user()->id){
+        if($movimento->conta->user_id == $user->id){
             return true;
         }
         return false;
     }
 
-    public function update_Blq_tipo(User $user, User $model)
+    /**
+     * Determine whether the user can restore the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Movimento  $movimento
+     * @return mixed
+     */
+    public function restore(User $user, Movimento $movimento)
     {
-        if($user->adm){
+        if($movimento->conta->user_id == $user->id){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Determine whether the user can permanently delete the model.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Movimento  $movimento
+     * @return mixed
+     */
+    public function forceDelete(User $user, Movimento $movimento)
+    {
+        if($movimento->conta->user_id == $user->id){
             return true;
         }
         return false;

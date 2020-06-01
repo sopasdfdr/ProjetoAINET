@@ -32,7 +32,7 @@
                             <path d="M4 11a1 1 0 112 0v1a1 1 0 11-2 0v-1zm6-4a1 1 0 112 0v5a1 1 0 11-2 0V7zM7 9a1 1 0 012 0v3a1 1 0 11-2 0V9z"/>
                         </svg>
                     </a>
-
+                    @can('can:view,App\Conta')
                     <form action="{{route('conta.delete', ['conta' => $conta])}}" method="POST" role="form" class="inline">
                         @csrf
                         @method('delete')
@@ -44,6 +44,7 @@
                         </button>
                         @include('partials.modal-messages', ['paramId' => 'modalContaRemove'.$conta->id, 'title' => 'Remover Conta', 'text' => 'Tem a certeza que quer eliminar a conta: "'. $conta->nome .'" ?'])
                     </form>
+                    @endcan
                 </td>
             </tr>
         @endforeach
